@@ -86,11 +86,11 @@ export default function Home() {
                 blog
               </a>
               {' '}and shitpost on{' '}
-              <a href="https://twitter.com/ritamsaha" target="_blank" rel="noopener noreferrer" className="link-accent">
+              <a href="https://x.com/saharitam963" target="_blank" rel="noopener noreferrer" className="link-accent">
                 X
               </a>
               . Check out my work below or grab my{' '}
-              <a href="/resume.pdf" className="link-accent">
+              <a href="https://drive.google.com/file/d/1Z6To-RB_xm8OXM17XLcgJXRwSDP95ijV/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="link-accent">
                 resume
               </a>
               .

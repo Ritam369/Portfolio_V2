@@ -2,14 +2,14 @@
   "connect": [
     {
       "label": "Email",
-      "value": "ritamsaha@example.com",
-      "url": "mailto:ritamsaha@example.com",
+      "value": "mail@ritamsahablogs.dev",
+      "url": "mailto:mail@ritamsahablogs.dev",
       "icon": "mail"
     },
     {
       "label": "Twitter / X",
-      "value": "@ritamsaha_dev",
-      "url": "https://twitter.com/ritamsaha_dev",
+      "value": "@saharitam963",
+      "url": "https://x.com/saharitam963",
       "icon": "twitter"
     }
   ],
@@ -17,19 +17,19 @@
     {
       "label": "Resume",
       "value": "Download my latest resume",
-      "url": "/resume.pdf",
+      "url": "https://drive.google.com/file/d/1Z6To-RB_xm8OXM17XLcgJXRwSDP95ijV/view?usp=sharing",
       "icon": "file"
     },
     {
       "label": "LinkedIn",
       "value": "Professional network",
-      "url": "https://linkedin.com/in/ritamsaha",
+      "url": "https://www.linkedin.com/in/ritamsaha137",
       "icon": "linkedin"
     },
     {
       "label": "GitHub",
       "value": "Code & projects",
-      "url": "https://github.com/ritamsaha",
+      "url": "https://github.com/Ritam369",
       "icon": "github"
     }
   ],

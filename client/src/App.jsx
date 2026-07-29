@@ -30,11 +30,17 @@ function NotFound() {
   )
 }
 
-// Scrolls to top on every route change
+// Scrolls to top on every route change.
+// Uses 'instant' to bypass smooth-scroll CSS and fires after paint
+// so it always wins over any in-page scroll restoration.
 function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => {
-    window.scrollTo(0, 0)
+    // requestAnimationFrame ensures this runs after the new page renders,
+    // preventing the IntersectionObserver on Home from fighting the scroll.
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    })
   }, [pathname])
   return null
 }

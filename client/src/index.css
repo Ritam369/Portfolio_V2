@@ -14,7 +14,9 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    /* Do NOT set scroll-behavior: smooth here — it conflicts with
+       programmatic instant scroll-to-top on route changes.
+       Smooth scrolling for in-page anchors is handled via JS (.scrollIntoView). */
   }
 
   body {

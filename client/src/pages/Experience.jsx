@@ -8,7 +8,7 @@ export default function Experience() {
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    document.title = 'Work Experience — Ritam Saha'
+    document.title = 'Chapters of Ritam\'s Journey'
     getExperience()
       .then(setExperience)
       .catch(() => setError('Failed to load experience.'))
