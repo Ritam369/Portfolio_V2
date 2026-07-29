@@ -1,0 +1,32 @@
+[
+  {
+    "id": "impulse-2k26",
+    "title": "Impulse 2k26",
+    "description": "College cultural fest website — event listings, registration flow, and schedule, optimized for fast first load.",
+    "techStack": ["React", "Vercel", "Tailwind CSS"],
+    "liveUrl": "https://example.com",
+    "repoUrl": "https://github.com/ritamsaha/impulse-2k26",
+    "featured": true,
+    "order": 1
+  },
+  {
+    "id": "portfolio-v1",
+    "title": "Portfolio V1",
+    "description": "First iteration of my personal portfolio — built with React and deployed on Vercel. Focused on clean layout and fast load times.",
+    "techStack": ["React", "Vite", "Tailwind CSS"],
+    "liveUrl": "https://ritamsaha.me",
+    "repoUrl": "https://github.com/ritamsaha/portfolio-v1",
+    "featured": true,
+    "order": 2
+  },
+  {
+    "id": "demo-project",
+    "title": "Demo Project",
+    "description": "Placeholder — replace with a real project when ready.",
+    "techStack": ["Node.js", "Express", "PostgreSQL"],
+    "liveUrl": "",
+    "repoUrl": "",
+    "featured": false,
+    "order": 3
+  }
+]

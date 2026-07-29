@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg-primary: #0a0a0a;
+    --color-bg-surface: #111111;
+    --color-border-subtle: #262626;
+    --color-text-primary: #e5e5e5;
+    --color-text-muted: #8a8a8a;
+    --color-accent: #7dd3dc;
+    --color-accent-hover: #a3e4ea;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-bg-primary text-text-primary font-mono antialiased;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  * {
+    @apply border-border-subtle;
+  }
+
+  ::selection {
+    background-color: #7dd3dc33;
+    color: #a3e4ea;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0a0a;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #262626;
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #8a8a8a;
+  }
+}
+
+@layer components {
+  /* Page wrapper — consistent max-width and padding */
+  .page-wrapper {
+    @apply max-w-3xl mx-auto px-6 sm:px-8 py-16 sm:py-20;
+  }
+
+  /* Section header — borderless label like "Things I've written" */
+  .section-header {
+    @apply text-text-primary text-base font-semibold px-3 py-2 border border-border-subtle rounded-md inline-block mb-6;
+  }
+
+  /* Tech chip / tag */
+  .tech-tag {
+    @apply text-xs text-text-muted border border-border-subtle rounded px-2 py-0.5 font-mono;
+  }
+
+  /* Accent link */
+  .link-accent {
+    @apply text-accent hover:text-accent-hover transition-colors duration-150 underline underline-offset-2;
+  }
+
+  /* Muted external link row */
+  .list-row {
+    @apply flex items-center justify-between py-4 border-b border-border-subtle last:border-b-0 group cursor-pointer;
+  }
+
+  /* Fade-in animation for page content */
+  .fade-in {
+    animation: fadeIn 0.3s ease-out both;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}

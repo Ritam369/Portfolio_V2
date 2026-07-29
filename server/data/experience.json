@@ -1,0 +1,12 @@
+[
+  {
+    "id": "omnivera-2026",
+    "company": "Omnivera Technologies Private Ltd.",
+    "role": "Full-Stack Web Developer Intern",
+    "startDate": "2026-01",
+    "endDate": null,
+    "current": true,
+    "description": "Working across the full stack building and maintaining web applications, collaborating with the engineering team on feature delivery and code quality.",
+    "tech": ["React", "Node.js", "Express", "MongoDB"]
+  }
+]

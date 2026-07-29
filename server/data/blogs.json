@@ -1,0 +1,26 @@
+[
+  {
+    "id": "blog-getting-started-fullstack",
+    "title": "Getting Started with Full-Stack Development",
+    "url": "https://ritamsahablogs.dev/getting-started-fullstack",
+    "publishedDate": "2026-06-01",
+    "excerpt": "A pragmatic guide to going from zero to shipping your first full-stack app with React and Node.",
+    "featured": true
+  },
+  {
+    "id": "blog-understanding-express-middleware",
+    "title": "Understanding Express Middleware",
+    "url": "https://ritamsahablogs.dev/understanding-express-middleware",
+    "publishedDate": "2026-04-15",
+    "excerpt": "Middleware is the backbone of any Express app. Here's how it actually works, from first principles.",
+    "featured": true
+  },
+  {
+    "id": "blog-tailwind-mental-model",
+    "title": "The Right Mental Model for Tailwind CSS",
+    "url": "https://ritamsahablogs.dev/tailwind-mental-model",
+    "publishedDate": "2026-02-20",
+    "excerpt": "Stop fighting Tailwind and start thinking in utility-first. How I changed my approach and started shipping faster.",
+    "featured": true
+  }
+]

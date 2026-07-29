@@ -1,0 +1,44 @@
+{
+  "connect": [
+    {
+      "label": "Email",
+      "value": "ritamsaha@example.com",
+      "url": "mailto:ritamsaha@example.com",
+      "icon": "mail"
+    },
+    {
+      "label": "Twitter / X",
+      "value": "@ritamsaha_dev",
+      "url": "https://twitter.com/ritamsaha_dev",
+      "icon": "twitter"
+    }
+  ],
+  "professional": [
+    {
+      "label": "Resume",
+      "value": "Download my latest resume",
+      "url": "/resume.pdf",
+      "icon": "file"
+    },
+    {
+      "label": "LinkedIn",
+      "value": "Professional network",
+      "url": "https://linkedin.com/in/ritamsaha",
+      "icon": "linkedin"
+    },
+    {
+      "label": "GitHub",
+      "value": "Code & projects",
+      "url": "https://github.com/ritamsaha",
+      "icon": "github"
+    }
+  ],
+  "content": [
+    {
+      "label": "Blog",
+      "value": "Deep dives on ritamsahablogs.dev",
+      "url": "https://ritamsahablogs.dev",
+      "icon": "hash"
+    }
+  ]
+}
