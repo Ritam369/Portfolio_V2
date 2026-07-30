@@ -1,26 +1,58 @@
 [
   {
-    "id": "blog-getting-started-fullstack",
-    "title": "Getting Started with Full-Stack Development",
-    "url": "https://ritamsahablogs.dev/getting-started-fullstack",
-    "publishedDate": "2026-06-01",
-    "excerpt": "A pragmatic guide to going from zero to shipping your first full-stack app with React and Node.",
+    "id": "why-version-control-exists",
+    "title": "Why Version Control Exists: The Pendrive Problem",
+    "url": "https://dev.to/ritam369/the-pendrive-problem-that-led-to-the-creation-of-git-2kj8",
+    "publishedDate": "2025-12-30",
+    "excerpt": "This blog explores the chaotic history of code collaboration before modern version control & birth of Git.",
     "featured": true
   },
   {
-    "id": "blog-understanding-express-middleware",
-    "title": "Understanding Express Middleware",
-    "url": "https://ritamsahablogs.dev/understanding-express-middleware",
-    "publishedDate": "2026-04-15",
-    "excerpt": "Middleware is the backbone of any Express app. Here's how it actually works, from first principles.",
+    "id": "understanding-network-devices",
+    "title": "Understanding Network Devices & their Functionalities",
+    "url": "https://dev.to/ritam369/inside-git-how-it-works-and-the-role-of-the-git-folder-3a4m",
+    "publishedDate": "2026-01-13",
+    "excerpt": "This blog provides a beginner-friendly breakdown of how internet connectivity works by explaining the specific roles of various network devices.",
     "featured": true
   },
   {
-    "id": "blog-tailwind-mental-model",
-    "title": "The Right Mental Model for Tailwind CSS",
-    "url": "https://ritamsahablogs.dev/tailwind-mental-model",
-    "publishedDate": "2026-02-20",
-    "excerpt": "Stop fighting Tailwind and start thinking in utility-first. How I changed my approach and started shipping faster.",
+    "id": "tcp-vs-udp",
+    "title": "TCP vs UDP: When to Use What, and How TCP Relates to HTTP",
+    "url": "https://dev.to/ritam369/tcp-vs-udp-when-to-use-what-and-how-tcp-relates-to-http-4144",
+    "publishedDate": "2026-01-23",
+    "excerpt": "This blog explains the core differences between TCP and UDP, and how HTTP relates to them.",
+    "featured": false
+  },
+  {
+    "id": "dns-explained",
+    "title": "DNS Explained: How the Internet Finds Websites",
+    "url": "https://dev.to/ritam369/dns-explained-how-the-internet-finds-websites-1ioj",
+    "publishedDate": "2026-01-27",
+    "excerpt": "This blog demystifies the Domain Name System (DNS), describing it as the internet's phonebook that translates human-friendly domain names into machine-readable IP addresses.",
+    "featured": true
+  },
+  {
+    "id": "understanding-html-tags",
+    "title": "Understanding HTML Tags and Elements",
+    "url": "https://dev.to/ritam369/understanding-html-tags-and-elements-1gk2",
+    "publishedDate": "2026-01-28",
+    "excerpt": "This blog post introduces HTML as the foundational \"skeleton\" that structures web content.",
+    "featured": false
+  },
+  {
+    "id": "how-a-browser-works",
+    "title": "How a Browser Works: A Beginner-Friendly Guide to Browser Internals",
+    "url": "https://dev.to/ritam369/how-a-browser-works-a-beginner-friendly-guide-to-browser-internals-1f7c",
+    "publishedDate": "2026-02-01",
+    "excerpt": "This blog explains the internal workings of a web browser, breaking down what happens between typing a URL and a webpage appearing.",
+    "featured": true
+  },
+  {
+    "id": "javascript-hoisting",
+    "title": "JavaScript Hoisting and the Temporal Dead Zone Explained (Why let/const Are Safer Than var)",
+    "url": "https://dev.to/ritam369/javascript-hoisting-and-the-temporal-dead-zone-why-var-got-deprecated-and-letconst-rule-the-1g6f",
+    "publishedDate": "2026-02-14",
+    "excerpt": "This blog post explains JavaScript hoisting and why modern developers prefer 'let' and 'const' over 'var'.",
     "featured": true
   }
 ]

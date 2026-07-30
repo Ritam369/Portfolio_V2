@@ -21,9 +21,12 @@ export default function Links() {
     <main className="page-wrapper fade-in">
       {/* Centered profile header — mirrors reference screenshot */}
       <div className="flex flex-col items-center text-center mb-12">
-        <div className="w-24 h-24 rounded-md bg-bg-surface border border-border-subtle mb-4 overflow-hidden flex items-center justify-center">
-          {/* Placeholder avatar — replace with <img src="/avatar.jpg" ... /> when photo is added */}
-          <span className="text-3xl text-text-muted font-bold select-none">RS</span>
+        <div className="w-24 h-24 rounded-md border border-border-subtle mb-4 overflow-hidden">
+          <img
+            src="/OscarIsaac.jpeg"
+            alt="RS"
+            className="w-full h-full object-cover brightness-50 hover:brightness-100 transition-[filter] text-3xl font-bold select-none duration-500 ease-in-out"
+          />
         </div>
         <h1 className="text-2xl font-bold text-text-primary mb-1">Ritam Saha</h1>
         <p className="text-text-muted text-sm max-w-xs">

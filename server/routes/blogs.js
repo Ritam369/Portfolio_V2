@@ -8,10 +8,12 @@ const router = Router()
 
 router.get('/', (req, res) => {
   try {
-    const featured = blogs
-      .filter((b) => b.featured === true)
+    const all = req.query.all === 'true'
+
+    const result = (all ? blogs : blogs.filter((b) => b.featured === true))
       .sort((a, b) => new Date(b.publishedDate) - new Date(a.publishedDate))
-    res.json(featured)
+
+    res.json(result)
   } catch (err) {
     res.status(500).json({ error: 'Failed to load blogs data' })
   }

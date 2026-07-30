@@ -22,7 +22,10 @@ function ScrollDots({ sections, activeIdx }) {
 }
 
 export default function Home() {
-  const [blogs, setBlogs] = useState([])
+  // featuredBlogs — only featured:true, shown in this section
+  const [featuredBlogs, setFeaturedBlogs] = useState([])
+  // totalBlogsCount — total across ALL blogs (featured + non-featured) for "Show N more" math
+  const [totalBlogsCount, setTotalBlogsCount] = useState(0)
   const [projects, setProjects] = useState([])
   const [activeSection, setActiveSection] = useState(0)
 
@@ -30,7 +33,10 @@ export default function Home() {
 
   useEffect(() => {
     document.title = "Ritam's Portfolio"
-    getBlogs().then(setBlogs).catch(() => {})
+    // Fetch featured-only for display
+    getBlogs(false).then(setFeaturedBlogs).catch(() => {})
+    // Fetch all to know the total count for "Show N more"
+    getBlogs(true).then((all) => setTotalBlogsCount(all.length)).catch(() => {})
     getProjects().then(setProjects).catch(() => {})
   }, [])
 
@@ -52,10 +58,10 @@ export default function Home() {
       if (el) observer.observe(el)
     })
     return () => observer.disconnect()
-  }, [blogs, projects])
+  }, [featuredBlogs, projects])
 
-  const latestBlog = blogs[0]
-  const latestProject = projects[0]
+  // "Show N more" = total blogs on /blogs page minus the featured ones shown here
+  const showMoreCount = totalBlogsCount - featuredBlogs.length
 
   return (
     <>
@@ -90,7 +96,7 @@ export default function Home() {
                 X
               </a>
               . Check out my work below or grab my{' '}
-              <a href="https://drive.google.com/file/d/1Z6To-RB_xm8OXM17XLcgJXRwSDP95ijV/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="link-accent">
+              <a href="https://drive.google.com/file/d/1g48TUxRhY5JNVjtP-5Y718Ye1mmgzqnI/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="link-accent">
                 resume
               </a>
               .
@@ -122,7 +128,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Latest Writing */}
+        {/* Latest Writing — featured blogs only */}
         <section id="section-1" data-section="1" className="pb-14">
           <div className="flex items-center justify-between mb-6">
             <span className="section-header">Things I've written</span>
@@ -131,22 +137,23 @@ export default function Home() {
             </Link>
           </div>
 
-          {blogs.length === 0 ? (
+          {featuredBlogs.length === 0 ? (
             <p className="text-text-muted text-sm">Loading posts…</p>
           ) : (
             <div>
-              {blogs.slice(0, 5).map((b) => (
+              {featuredBlogs.map((b) => (
                 <BlogCard key={b.id} {...b} />
               ))}
             </div>
           )}
 
-          {blogs.length > 5 && (
+          {/* Show N more: count of non-featured blogs on the /blogs page */}
+          {showMoreCount > 0 && (
             <Link
               to="/blogs"
               className="block mt-4 text-center text-sm text-accent hover:text-accent-hover transition-colors duration-150"
             >
-              Show {blogs.length - 5} more →
+              Show {showMoreCount} more →
             </Link>
           )}
         </section>

@@ -1,17 +1,25 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import BlogCard from '../components/BlogCard.jsx'
-import { getBlogs } from '../lib/api.js'
+import { getBlogs, getDevToCount } from '../lib/api.js'
 
 export default function Blogs() {
+  // All blogs (featured + non-featured) for this page
   const [blogs, setBlogs] = useState([])
+  // Total count from dev.to — null while loading, number once resolved
+  const [devToCount, setDevToCount] = useState(null)
   const [error, setError] = useState(null)
 
   useEffect(() => {
     document.title = 'Blogs — Ritam Saha'
-    getBlogs()
+
+    // Fetch all portfolio blogs (featured + non-featured)
+    getBlogs(true)
       .then(setBlogs)
       .catch(() => setError('Failed to load posts.'))
+
+    // Fetch real total count from dev.to independently — failure is silent
+    getDevToCount('ritam369').then(setDevToCount).catch(() => {})
   }, [])
 
   return (
@@ -32,13 +40,15 @@ export default function Blogs() {
         Deep dives into web dev, systems, and things I'm learning while building.
       </p>
 
-      {!error && blogs.length > 0 && (
+      {/* Article count — uses dev.to total when available, falls back to portfolio count */}
+      {!error && (blogs.length > 0 || devToCount !== null) && (
         <p className="text-text-muted text-xs mb-8 flex items-center gap-1.5">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
             <path d="M14 2v4a2 2 0 0 0 2 2h4" />
           </svg>
-          {blogs.length} article{blogs.length !== 1 ? 's' : ''} published
+          {devToCount !== null ? devToCount : blogs.length}{' '}
+          article{(devToCount ?? blogs.length) !== 1 ? 's' : ''} published
         </p>
       )}
 
@@ -62,7 +72,8 @@ export default function Blogs() {
           Want reactions and discussion? Head to the originals.
         </p>
         <a
-          href="https://ritamsahablogs.dev"
+          // href="https://ritamsahablogs.dev"
+          href="https://dev.to/ritam369"
           target="_blank"
           rel="noopener noreferrer"
           className="text-accent hover:text-accent-hover transition-colors duration-150 text-sm flex items-center gap-1.5"
