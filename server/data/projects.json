@@ -1,32 +1,72 @@
 [
   {
-    "id": "impulse-2k26",
-    "title": "Impulse 2k26",
-    "description": "College cultural fest website — event listings, registration flow, and schedule, optimized for fast first load.",
-    "techStack": ["React", "Vercel", "Tailwind CSS"],
-    "liveUrl": "https://example.com",
-    "repoUrl": "https://github.com/ritamsaha/impulse-2k26",
+    "id": "chai-aur-auth",
+    "title": "Chai Aur Auth",
+    "description": "Architected an OAuth 2.0 and OpenID Connect authorization server in TypeScript and Express, integrated across three applications to provide reusable single sign-on.",
+    "techStack": ["TypeScript", "Express", "Zod", "OIDC", "OAuth 2.0", "Vercel"],
+    "liveUrl": "https://www.chaiaurauth.tech/",
+    "repoUrl": "https://github.com/Ritam369/authentication-service",
     "featured": true,
     "order": 1
   },
   {
-    "id": "portfolio-v1",
-    "title": "Portfolio V1",
-    "description": "First iteration of my personal portfolio — built with React and deployed on Vercel. Focused on clean layout and fast load times.",
-    "techStack": ["React", "Vite", "Tailwind CSS"],
-    "liveUrl": "https://ritamsaha.me",
-    "repoUrl": "https://github.com/ritamsaha/portfolio-v1",
+    "id": "real-time-location-tracker",
+    "title": "Real-time Location Tracker",
+    "description": "Built a multi-user location tracking application using Socket.IO, Kafka, OAuth 2.0, OpenID Connect, and Leaflet.",
+    "techStack": ["WebSocket", "Kafka", "Leaflet", "OIDC"],
+    "liveUrl": "",
+    "repoUrl": "https://github.com/Ritam369/location-tracking-v2",
     "featured": true,
     "order": 2
   },
   {
-    "id": "demo-project",
-    "title": "Demo Project",
-    "description": "Placeholder — replace with a real project when ready.",
-    "techStack": ["Node.js", "Express", "PostgreSQL"],
+    "id": "real-time-polling-system",
+    "title": "Real-time Polling System",
+    "description": "Built a real-time polling and quiz system with Node.js, Express, Socket.IO, Redis, and pub/sub.",
+    "techStack": ["Node.js", "Express", "Socket.IO", "Redis"],
     "liveUrl": "",
-    "repoUrl": "",
-    "featured": false,
+    "repoUrl": "https://github.com/Ritam369/real-time-polling-system",
+    "featured": true,
     "order": 3
+  },
+  {
+    "id": "diskshobi",
+    "title": "DiskDhobi",
+    "description": "Built a local-only Electron application for NixOS that identifies and safely removes reclaimable disk space from dependency, build, cache, and large-file clutter.",
+    "techStack": ["Electronjs", "Node.js"],
+    "liveUrl": "",
+    "repoUrl": "https://github.com/Ritam369/DiskDhobi",
+    "featured": true,
+    "order": 4
+  },
+  {
+    "id": "winterest",
+    "title": "Winterest",
+    "description": "Built and deployed a full-stack wallpaper discovery platform with React, Express.js, MongoDB, Cloudinary, and Vercel.",
+    "techStack": ["React", "Express.js", "MongoDB", "Cloudinary", "Vercel"],
+    "liveUrl": "https://winterest.vercel.app/",
+    "repoUrl": "https://github.com/Ritam369/Winterest",
+    "featured": true,
+    "order": 5
+  },
+  {
+    "id": "impulse-2k26",
+    "title": "Impulse 2k26 Cultural Fest Website",
+    "description": "Built and deployed a responsive React website for Techno Bengal Institute of Technology's Impulse 2k26 cultural fest.",
+    "techStack": ["React", "Tailwind CSS", "Vercel"],
+    "liveUrl": "https://bitcollege.in/impulse2k26/",
+    "repoUrl": "https://github.com/Ritam369/impulse-2k26",
+    "featured": true,
+    "order": 6
+  },
+  {
+    "id": "blog-site",
+    "title": "My Blog Site",
+    "description": "Full-stack blog application using Express.js, MongoDB, Mongoose, Vanilla JavaScript, Vercel, and ImageKit.",
+    "techStack": ["Express", "MongoDB", "Vanilla JS", "Vercel", "ImageKit"],
+    "liveUrl": "https://ritamsahablogs.dev/",
+    "repoUrl": "https://github.com/Ritam369/blog-site",
+    "featured": true,
+    "order": 7
   }
 ]
