@@ -26,7 +26,7 @@
     "techStack": ["Node.js", "Express", "Socket.IO", "Redis"],
     "liveUrl": "",
     "repoUrl": "https://github.com/Ritam369/real-time-polling-system",
-    "featured": true,
+    "featured": false,
     "order": 3
   },
   {
@@ -56,7 +56,7 @@
     "techStack": ["React", "Tailwind CSS", "Vercel"],
     "liveUrl": "https://bitcollege.in/impulse2k26/",
     "repoUrl": "https://github.com/Ritam369/impulse-2k26",
-    "featured": true,
+    "featured": false,
     "order": 6
   },
   {
@@ -66,7 +66,7 @@
     "techStack": ["Express", "MongoDB", "Vanilla JS", "Vercel", "ImageKit"],
     "liveUrl": "https://ritamsahablogs.dev/",
     "repoUrl": "https://github.com/Ritam369/blog-site",
-    "featured": true,
+    "featured": false,
     "order": 7
   }
 ]

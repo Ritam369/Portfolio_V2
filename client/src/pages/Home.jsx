@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import BlogCard from '../components/BlogCard.jsx'
+import ProjectCard from '../components/ProjectCard.jsx'
 import { getBlogs, getProjects } from '../lib/api.js'
 
 // Right-edge scroll dots for Home page sections
@@ -21,12 +22,40 @@ function ScrollDots({ sections, activeIdx }) {
   )
 }
 
+// Typing effect hook — types out the text once on mount, then holds with blinking cursor
+function useTypingEffect(text, speedMs = 80) {
+  const [displayed, setDisplayed] = useState('')
+  const [done, setDone] = useState(false)
+
+  useEffect(() => {
+    setDisplayed('')
+    setDone(false)
+    let i = 0
+    const interval = setInterval(() => {
+      i++
+      setDisplayed(text.slice(0, i))
+      if (i >= text.length) {
+        clearInterval(interval)
+        setDone(true)
+      }
+    }, speedMs)
+    return () => clearInterval(interval)
+  }, [text, speedMs])
+
+  return { displayed, done }
+}
+
 export default function Home() {
+  const { displayed: typedName, done: typingDone } = useTypingEffect('Ritam', 100)
+
   // featuredBlogs — only featured:true, shown in this section
   const [featuredBlogs, setFeaturedBlogs] = useState([])
   // totalBlogsCount — total across ALL blogs (featured + non-featured) for "Show N more" math
   const [totalBlogsCount, setTotalBlogsCount] = useState(0)
-  const [projects, setProjects] = useState([])
+  // featuredProjects — only featured:true, shown in this section
+  const [featuredProjects, setFeaturedProjects] = useState([])
+  // totalProjectsCount — all projects (featured + non-featured) for "Show N more" math
+  const [totalProjectsCount, setTotalProjectsCount] = useState(0)
   const [activeSection, setActiveSection] = useState(0)
 
   const SECTIONS = ['hero', 'blogs', 'projects']
@@ -37,7 +66,10 @@ export default function Home() {
     getBlogs(false).then(setFeaturedBlogs).catch(() => {})
     // Fetch all to know the total count for "Show N more"
     getBlogs(true).then((all) => setTotalBlogsCount(all.length)).catch(() => {})
-    getProjects().then(setProjects).catch(() => {})
+    // Fetch featured-only projects for display
+    getProjects(false).then(setFeaturedProjects).catch(() => {})
+    // Fetch all projects to know the total count for "Show N more"
+    getProjects(true).then((all) => setTotalProjectsCount(all.length)).catch(() => {})
   }, [])
 
   // Scroll spy for right-edge dots
@@ -58,10 +90,12 @@ export default function Home() {
       if (el) observer.observe(el)
     })
     return () => observer.disconnect()
-  }, [featuredBlogs, projects])
+  }, [featuredBlogs, featuredProjects])
 
   // "Show N more" = total blogs on /blogs page minus the featured ones shown here
   const showMoreCount = totalBlogsCount - featuredBlogs.length
+  // "Show N more" = total projects on /projects page minus the featured ones shown here
+  const showMoreProjectsCount = totalProjectsCount - featuredProjects.length
 
   return (
     <>
@@ -71,7 +105,13 @@ export default function Home() {
         {/* Hero */}
         <section id="section-0" data-section="0" className="pt-2 pb-14">
           <h1 className="text-4xl sm:text-5xl font-bold text-text-primary mb-3 tracking-tight">
-            Ritam
+            {typedName}
+            {/* Cursor — blinks while typing, stays solid briefly then fades out */}
+            <span
+              className={`inline-block w-0.5 h-9 sm:h-11 bg-accent align-middle ml-1 ${
+                typingDone ? 'animate-[blink_1s_step-end_infinite]' : 'opacity-100'
+              }`}
+            />
           </h1>
           <p className="text-text-muted text-sm mb-8">
             Building for the web, learning every layer, shipping what matters.
@@ -158,8 +198,8 @@ export default function Home() {
           )}
         </section>
 
-        {/* Latest Projects */}
-        <section id="section-2" data-section="2" className="pb-14">
+        {/* Things I've built — featured projects only */}
+        <section id="section-2" data-section="2" className="pb-2">
           <div className="flex items-center justify-between mb-6">
             <span className="section-header">Things I've built</span>
             <Link to="/projects" className="text-xs text-text-muted hover:text-accent transition-colors duration-150">
@@ -167,20 +207,24 @@ export default function Home() {
             </Link>
           </div>
 
-          {projects.length === 0 ? (
+          {featuredProjects.length === 0 ? (
             <p className="text-text-muted text-sm">Loading projects…</p>
           ) : (
-            <div className="grid gap-3 sm:grid-cols-2">
-              {projects.slice(0, 2).map((p) => (
-                <div
-                  key={p.id}
-                  className="border border-border-subtle rounded-md p-4 bg-bg-surface hover:border-[#3a3a3a] transition-colors duration-150"
-                >
-                  <h3 className="text-text-primary text-sm font-semibold mb-1">{p.title}</h3>
-                  <p className="text-text-muted text-xs leading-relaxed line-clamp-2">{p.description}</p>
-                </div>
+            <div className="grid gap-3 sm:grid-cols-2 items-stretch">
+              {featuredProjects.map((p) => (
+                <ProjectCard key={p.id} {...p} />
               ))}
             </div>
+          )}
+
+          {/* Show N more: count of non-featured projects on the /projects page */}
+          {showMoreProjectsCount > 0 && (
+            <Link
+              to="/projects"
+              className="block mt-8 text-center text-sm text-accent hover:text-accent-hover transition-colors duration-150"
+            >
+              Show {showMoreProjectsCount} more →
+            </Link>
           )}
         </section>
       </main>

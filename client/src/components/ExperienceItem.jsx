@@ -16,7 +16,7 @@ export default function ExperienceItem({ company, role, startDate, endDate, curr
     <article className="border-b border-border-subtle pb-8 last:border-b-0 last:pb-0">
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 mb-2">
         <div>
-          <h3 className="text-text-primary text-sm font-semibold">{company}</h3>
+          <h3 className="text-text-primary hover:text-accent-hover text-sm font-semibold">{company}</h3>
           <p className="text-text-muted text-sm">{role}</p>
         </div>
         <span className="text-text-muted text-xs shrink-0 sm:text-right">

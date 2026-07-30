@@ -12,7 +12,7 @@ export default function Projects() {
 
   useEffect(() => {
     document.title = 'Projects — Ritam Saha'
-    getProjects()
+    getProjects(true)
       .then(setProjects)
       .catch(() => setError('Failed to load projects.'))
   }, [])
@@ -45,7 +45,7 @@ export default function Projects() {
       )}
 
       {shown.length > 0 && (
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2 items-stretch">
           {shown.map((p) => (
             <ProjectCard key={p.id} {...p} />
           ))}

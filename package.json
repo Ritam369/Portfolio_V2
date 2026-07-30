@@ -2,14 +2,19 @@
   "name": "portfolio-v2",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev:client": "cd client && bun run dev",
     "dev:server": "node server/index.js",
     "dev": "concurrently \"bun run dev:server\" \"bun run dev:client\"",
-    "build": "cd client && bun run build",
+    "build": "cd client && bun install && bun run build",
     "start": "node server/index.js"
   },
   "dependencies": {
+    "cors": "2.8.5",
+    "express": "4.21.1"
+  },
+  "devDependencies": {
     "concurrently": "8.2.2"
   }
 }

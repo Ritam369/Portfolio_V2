@@ -16,8 +16,12 @@ export function getExperience() {
   return fetchJSON('/experience')
 }
 
-export function getProjects() {
-  return fetchJSON('/projects')
+/**
+ * @param {boolean} all - if true, fetches all projects (featured + non-featured).
+ *                        if false/omitted, fetches only featured projects.
+ */
+export function getProjects(all = false) {
+  return fetchJSON(all ? '/projects?all=true' : '/projects')
 }
 
 /**
