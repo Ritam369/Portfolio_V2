@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import BlogCard from '../components/BlogCard.jsx'
 import ProjectCard from '../components/ProjectCard.jsx'
+import ContributionGraph from '../components/ContributionGraph.jsx'
 import { getBlogs, getProjects } from '../lib/api.js'
 
 // Right-edge scroll dots for Home page sections
@@ -58,7 +59,7 @@ export default function Home() {
   const [totalProjectsCount, setTotalProjectsCount] = useState(0)
   const [activeSection, setActiveSection] = useState(0)
 
-  const SECTIONS = ['hero', 'blogs', 'projects']
+  const SECTIONS = ['hero', 'projects', 'contributions', 'blogs']
 
   useEffect(() => {
     document.title = "Ritam's Portfolio"
@@ -72,25 +73,33 @@ export default function Home() {
     getProjects(true).then((all) => setTotalProjectsCount(all.length)).catch(() => {})
   }, [])
 
-  // Scroll spy for right-edge dots
+  // Scroll spy — finds whichever section's center is closest to the viewport
+  // center on every scroll tick. This is always deterministic: one winner,
+  // no threshold races, no skipping regardless of section height.
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const idx = parseInt(entry.target.dataset.section)
-            setActiveSection(idx)
-          }
-        })
-      },
-      { threshold: 0.4 },
-    )
-    SECTIONS.forEach((_, i) => {
-      const el = document.getElementById(`section-${i}`)
-      if (el) observer.observe(el)
-    })
-    return () => observer.disconnect()
-  }, [featuredBlogs, featuredProjects])
+    function onScroll() {
+      const mid = window.innerHeight / 2
+      let closest = 0
+      let closestDist = Infinity
+      SECTIONS.forEach((_, i) => {
+        const el = document.getElementById(`section-${i}`)
+        if (!el) return
+        const rect = el.getBoundingClientRect()
+        const sectionMid = rect.top + rect.height / 2
+        const dist = Math.abs(sectionMid - mid)
+        if (dist < closestDist) {
+          closestDist = dist
+          closest = i
+        }
+      })
+      setActiveSection(closest)
+    }
+
+    // Run once immediately so the dot is correct on first render
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, []) // no dependencies — SECTIONS is constant, getElementById always finds current DOM
 
   // "Show N more" = total blogs on /blogs page minus the featured ones shown here
   const showMoreCount = totalBlogsCount - featuredBlogs.length
@@ -168,38 +177,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Latest Writing — featured blogs only */}
+        {/* Things I've built — section 1 (moved up) */}
         <section id="section-1" data-section="1" className="pb-14">
-          <div className="flex items-center justify-between mb-6">
-            <span className="section-header">Things I've written</span>
-            <Link to="/blogs" className="text-xs text-text-muted hover:text-accent transition-colors duration-150">
-              All posts →
-            </Link>
-          </div>
-
-          {featuredBlogs.length === 0 ? (
-            <p className="text-text-muted text-sm">Loading posts…</p>
-          ) : (
-            <div>
-              {featuredBlogs.map((b) => (
-                <BlogCard key={b.id} {...b} />
-              ))}
-            </div>
-          )}
-
-          {/* Show N more: count of non-featured blogs on the /blogs page */}
-          {showMoreCount > 0 && (
-            <Link
-              to="/blogs"
-              className="block mt-4 text-center text-sm text-accent hover:text-accent-hover transition-colors duration-150"
-            >
-              Show {showMoreCount} more →
-            </Link>
-          )}
-        </section>
-
-        {/* Things I've built — featured projects only */}
-        <section id="section-2" data-section="2" className="pb-2">
           <div className="flex items-center justify-between mb-6">
             <span className="section-header">Things I've built</span>
             <Link to="/projects" className="text-xs text-text-muted hover:text-accent transition-colors duration-150">
@@ -224,6 +203,45 @@ export default function Home() {
               className="block mt-8 text-center text-sm text-accent hover:text-accent-hover transition-colors duration-150"
             >
               Show {showMoreProjectsCount} more →
+            </Link>
+          )}
+        </section>
+
+        {/* GitHub Contributions — section 2 */}
+        <section id="section-2" data-section="2" className="pb-14">
+          <div className="mb-2">
+            <span className="section-header">Contributions</span>
+          </div>
+          {/* <p className="text-text-muted text-sm mb-6">My open-source activity over the past year.</p> */}
+          <ContributionGraph />
+        </section>
+
+        {/* Latest Writing — featured blogs only — section 3 (moved down) */}
+        <section id="section-3" data-section="3" >
+          <div className="flex items-center justify-between mb-6">
+            <span className="section-header">Things I've written</span>
+            <Link to="/blogs" className="text-xs text-text-muted hover:text-accent transition-colors duration-150">
+              All posts →
+            </Link>
+          </div>
+
+          {featuredBlogs.length === 0 ? (
+            <p className="text-text-muted text-sm">Loading posts…</p>
+          ) : (
+            <div>
+              {featuredBlogs.map((b) => (
+                <BlogCard key={b.id} {...b} />
+              ))}
+            </div>
+          )}
+
+          {/* Show N more: count of non-featured blogs on the /blogs page */}
+          {showMoreCount > 0 && (
+            <Link
+              to="/blogs"
+              className="block mt-4 text-center text-sm text-accent hover:text-accent-hover transition-colors duration-150"
+            >
+              Show {showMoreCount} more →
             </Link>
           )}
         </section>

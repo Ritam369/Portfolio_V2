@@ -1,9 +1,11 @@
+import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import experienceRouter from './routes/experience.js'
 import projectsRouter from './routes/projects.js'
 import blogsRouter from './routes/blogs.js'
 import linksRouter from './routes/links.js'
+import contributionsRouter from './routes/contributions.js'
 
 const app = express()
 
@@ -15,6 +17,7 @@ app.use('/api/experience', experienceRouter)
 app.use('/api/projects', projectsRouter)
 app.use('/api/blogs', blogsRouter)
 app.use('/api/links', linksRouter)
+app.use('/api/github-contributions', contributionsRouter)
 
 // Health check
 app.get('/api', (req, res) => {

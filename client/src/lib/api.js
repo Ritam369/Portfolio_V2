@@ -36,6 +36,10 @@ export function getLinks() {
   return fetchJSON('/links')
 }
 
+export function getContributions() {
+  return fetchJSON('/github-contributions')
+}
+
 /**
  * Fetches total published article count from dev.to public API.
  * Uses page-size trick: request page=1 with per_page=1 and read the
