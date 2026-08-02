@@ -4,9 +4,10 @@ import HeroSection from '../components/home/HeroSection.jsx'
 import FeaturedProjects from '../components/home/FeaturedProjects.jsx'
 import ContributionsSection from '../components/home/ContributionsSection.jsx'
 import FeaturedBlogs from '../components/home/FeaturedBlogs.jsx'
+import NpmPackages from '../components/home/NpmPackages.jsx'
 
 // Section order: change the JSX order below to reorder the home page.
-const SECTION_COUNT = 4
+const SECTION_COUNT = 5
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState(0)
@@ -44,7 +45,8 @@ export default function Home() {
         <HeroSection          sectionIdx={0} />
         <FeaturedProjects     sectionIdx={1} />
         <ContributionsSection sectionIdx={2} />
-        <FeaturedBlogs        sectionIdx={3} />
+        <NpmPackages          sectionIdx={3} />
+        <FeaturedBlogs        sectionIdx={4} />
       </main>
     </>
   )

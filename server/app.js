@@ -6,6 +6,7 @@ import projectsRouter from './routes/projects.js'
 import blogsRouter from './routes/blogs.js'
 import linksRouter from './routes/links.js'
 import contributionsRouter from './routes/contributions.js'
+import npmPackagesRouter from './routes/npm-packages.js'
 
 const app = express()
 
@@ -18,6 +19,7 @@ app.use('/api/projects', projectsRouter)
 app.use('/api/blogs', blogsRouter)
 app.use('/api/links', linksRouter)
 app.use('/api/github-contributions', contributionsRouter)
+app.use('/api/npm-packages', npmPackagesRouter)
 
 // Health check
 app.get('/api', (req, res) => {
