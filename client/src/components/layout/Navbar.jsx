@@ -50,12 +50,7 @@ export default function Navbar() {
       {/* Desktop nav — top-right */}
       <nav className="hidden sm:flex absolute top-6 right-8 pointer-events-auto items-center gap-6 text-sm">
         {NAV_LINKS.map(({ to, label, exact }) => (
-          <NavLink
-            key={to}
-            to={to}
-            end={exact}
-            className={navLinkClass}
-          >
+          <NavLink key={to} to={to} end={exact} className={navLinkClass}>
             {label}
           </NavLink>
         ))}
@@ -71,13 +66,11 @@ export default function Navbar() {
           className="text-text-muted hover:text-text-primary transition-colors duration-150 p-1"
         >
           {menuOpen ? (
-            // X icon
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           ) : (
-            // Hamburger icon
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
               <line x1="3" y1="7" x2="21" y2="7" />
               <line x1="3" y1="12" x2="21" y2="12" />

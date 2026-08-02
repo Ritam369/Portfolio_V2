@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import BlogCard from '../components/BlogCard.jsx'
+import BlogCard from '../components/ui/BlogCard.jsx'
 import { getBlogs, getDevToCount } from '../lib/api.js'
 
 export default function Blogs() {

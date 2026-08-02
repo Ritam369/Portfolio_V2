@@ -14,7 +14,6 @@ export default function BlogCard({ title, url, publishedDate, excerpt }) {
       rel="noopener noreferrer"
       className="flex items-start gap-6 py-4 border-b border-border-subtle last:border-b-0 group hover:opacity-90 transition-opacity duration-150"
     >
-      {/* Date column — fixed width like reference */}
       <time
         dateTime={publishedDate}
         className="text-text-muted text-sm shrink-0 w-28 pt-0.5"
@@ -22,7 +21,6 @@ export default function BlogCard({ title, url, publishedDate, excerpt }) {
         {formatDate(publishedDate)}
       </time>
 
-      {/* Title + excerpt */}
       <div className="flex-1 min-w-0">
         <p className="text-text-primary text-sm group-hover:text-accent transition-colors duration-150 leading-snug">
           {title}

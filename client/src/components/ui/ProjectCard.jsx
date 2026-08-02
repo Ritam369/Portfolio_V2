@@ -6,12 +6,10 @@
 export default function ProjectCard({ title, description, techStack = [], liveUrl, repoUrl }) {
   return (
     <article className="flex flex-col h-full border border-border-subtle rounded-md p-5 bg-bg-surface hover:border-[#3a3a3a] transition-colors duration-150">
-      {/* Content — grows to fill available space */}
       <div className="flex-1">
         <h3 className="text-text-primary text-sm font-semibold mb-2">{title}</h3>
         <p className="text-text-muted text-sm leading-relaxed mb-4">{description}</p>
 
-        {/* Tech stack chips */}
         {techStack.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-4">
             {techStack.map((tech) => (
@@ -21,7 +19,6 @@ export default function ProjectCard({ title, description, techStack = [], liveUr
         )}
       </div>
 
-      {/* Links — mt-auto pushes this to the bottom-left no matter what's above */}
       {(liveUrl || repoUrl) && (
         <div className="flex items-center gap-4 text-xs mt-auto pt-1">
           {liveUrl && (

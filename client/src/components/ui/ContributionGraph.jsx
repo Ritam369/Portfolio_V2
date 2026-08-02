@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import { getContributions } from '../lib/api.js'
+import { getContributions } from '../../lib/api.js'
 
 // ─── Colour scale ─────────────────────────────────────────────────────────────
 function getColor(count) {
@@ -20,79 +20,35 @@ function formatTooltip(dateStr, count) {
 }
 
 // ─── Month labels ─────────────────────────────────────────────────────────────
-// A week's "representative month" is the month of its MIDDLE day, not its
-// first-occurring day. This avoids the classic edge bug: the first (partial)
-// week of the grid often spans two months (e.g. Jul 27–Aug 2), and scanning
-// every day for "first appearance" assigns BOTH months to week index 0,
-// producing two overlapping labels at the same x (one silently hidden behind
-// the other). Using the middle day collapses each week to a single owner,
-// and since weeks + dates are already chronological, labels come out in
-// order automatically — no sort needed, no possible duplicate x-position.
+// Uses the middle day of each week as the "owning month" — avoids the edge
+// bug where the first partial week spans two months and both get labelled at x=0.
 const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 const DAY_LABELS  = [null, 'Mon', null, 'Wed', null, 'Fri', null]
 
-// function getMonthLabels(weeks, STEP, LEFT_OFFSET) {
-//   const labels = []
-//   let prevKey = null
-
-//   weeks.forEach((week, wi) => {
-//     const days = week.contributionDays
-//     if (!days.length) return
-
-//     const midDay = days[Math.floor(days.length / 2)]
-//     const dt = new Date(midDay.date + 'T00:00:00')
-//     const month = dt.getMonth()
-//     const year = dt.getFullYear()
-//     const key = `${year}-${month}`
-
-//     if (key !== prevKey) {
-//       labels.push({ key, month, x: LEFT_OFFSET + wi * STEP })
-//       prevKey = key
-//     }
-//   })
-
-//   return labels
-// }
-
 function getMonthLabels(weeks, STEP, LEFT_OFFSET) {
-  // Pass 1: one candidate label per week-index where the "owning" month
-  // (the week's middle day) changes from the previous week.
   const raw = []
   let prevKey = null
 
   weeks.forEach((week, wi) => {
     const days = week.contributionDays
     if (!days.length) return
-
     const midDay = days[Math.floor(days.length / 2)]
-    const dt = new Date(midDay.date + 'T00:00:00')
+    const dt  = new Date(midDay.date + 'T00:00:00')
     const key = `${dt.getFullYear()}-${dt.getMonth()}`
-
     if (key !== prevKey) {
       raw.push({ key, month: dt.getMonth(), wi })
       prevKey = key
     }
   })
 
-  // Pass 2: drop any label that's too close to the NEXT one to avoid visual
-  // overlap. This only ever bites at the leading edge of the graph, where
-  // the first column is a partial week — e.g. "Jul" at wi=0 immediately
-  // followed by "Aug" at wi=1. Each label is ~3 chars (~20px @ fontSize 10),
-  // but columns are only STEP=16px apart, so anything closer than 2 columns
-  // apart will collide. We keep the later month since it represents a full
-  // week rather than a 2-3 day sliver.
-  const MIN_GAP_WEEKS = 2
-  const filtered = raw.filter((label, i) => {
-    const next = raw[i + 1]
-    if (next && next.wi - label.wi < MIN_GAP_WEEKS) return false
-    return true
-  })
-
-  return filtered.map(({ key, month, wi }) => ({
-    key,
-    month,
-    x: LEFT_OFFSET + wi * STEP,
-  }))
+  // Drop any label whose next sibling is less than 2 columns away (collision guard)
+  const MIN_GAP = 2
+  return raw
+    .filter((label, i) => {
+      const next = raw[i + 1]
+      return !(next && next.wi - label.wi < MIN_GAP)
+    })
+    .map(({ key, month, wi }) => ({ key, month, x: LEFT_OFFSET + wi * STEP }))
 }
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -115,6 +71,7 @@ export default function ContributionGraph() {
       .catch(() => setError('Could not load contribution data.'))
   }, [])
 
+  // Scroll to most recent (rightmost) weeks on load
   useEffect(() => {
     if (data && scrollRef.current) {
       scrollRef.current.scrollLeft = scrollRef.current.scrollWidth
@@ -135,23 +92,16 @@ export default function ContributionGraph() {
     setTooltip(t => ({ ...t, visible: false }))
   }
 
-  if (error) {
-    return <p className="text-text-muted text-xs">{error}</p>
-  }
+  if (error) return <p className="text-text-muted text-xs">{error}</p>
 
   if (!data) {
     return (
       <div>
         <div className="h-4 w-48 bg-bg-surface rounded mb-4 animate-pulse" />
-        <svg
-          width={LEFT_OFFSET + 52 * STEP}
-          height={TOP_OFFSET + 7 * STEP}
-          style={{ display: 'block' }}
-        >
+        <svg width={LEFT_OFFSET + 52 * STEP} height={TOP_OFFSET + 7 * STEP} style={{ display: 'block' }}>
           {Array.from({ length: 52 }).map((_, wi) =>
             Array.from({ length: 7 }).map((_, di) => (
-              <rect
-                key={`sk-${wi}-${di}`}
+              <rect key={`sk-${wi}-${di}`}
                 x={LEFT_OFFSET + wi * STEP} y={TOP_OFFSET + di * STEP}
                 width={CELL} height={CELL} rx={2}
                 fill="#161616" stroke="#262626" strokeWidth={0.5}
@@ -177,7 +127,6 @@ export default function ContributionGraph() {
 
       <div ref={scrollRef} className="overflow-x-auto pb-1">
         <div style={{ width: LEFT_OFFSET + gridW }}>
-
           <svg
             width={LEFT_OFFSET + gridW}
             height={TOP_OFFSET + gridH}
@@ -185,28 +134,14 @@ export default function ContributionGraph() {
             aria-label={`GitHub contribution graph: ${totalContributions} contributions in the last year`}
           >
             {monthLabels.map(({ key, month, x }) => (
-              <text
-                key={key}
-                x={x}
-                y={12}
-                fontSize={10}
-                fill="#8a8a8a"
-                fontFamily="'JetBrains Mono', monospace"
-              >
+              <text key={key} x={x} y={12} fontSize={10} fill="#8a8a8a" fontFamily="'JetBrains Mono', monospace">
                 {MONTH_NAMES[month]}
               </text>
             ))}
 
             {DAY_LABELS.map((label, i) =>
               label ? (
-                <text
-                  key={`d-${i}`}
-                  x={0}
-                  y={TOP_OFFSET + i * STEP + CELL - 1}
-                  fontSize={10}
-                  fill="#8a8a8a"
-                  fontFamily="'JetBrains Mono', monospace"
-                >
+                <text key={`d-${i}`} x={0} y={TOP_OFFSET + i * STEP + CELL - 1} fontSize={10} fill="#8a8a8a" fontFamily="'JetBrains Mono', monospace">
                   {label}
                 </text>
               ) : null
@@ -220,14 +155,9 @@ export default function ContributionGraph() {
                 return (
                   <rect
                     key={day.date}
-                    x={cx} y={cy}
-                    width={CELL} height={CELL}
-                    rx={2} ry={2}
-                    fill={bg}
-                    stroke={border}
-                    strokeWidth={0.5}
-                    pointerEvents="all"
-                    style={{ cursor: 'default' }}
+                    x={cx} y={cy} width={CELL} height={CELL} rx={2} ry={2}
+                    fill={bg} stroke={border} strokeWidth={0.5}
+                    pointerEvents="all" style={{ cursor: 'default' }}
                     onMouseEnter={(e) => handleMouseEnter(e, day)}
                     onMouseLeave={handleMouseLeave}
                   />
@@ -235,45 +165,13 @@ export default function ContributionGraph() {
               })
             )}
           </svg>
-
-          {/* <div className="flex items-center justify-end gap-1.5 mt-2">
-            <span className="text-text-muted text-xs">Less</span>
-            {[0, 2, 5, 9, 12].map((count) => {
-              const { bg, border } = getColor(count)
-              return (
-                <div
-                  key={count}
-                  style={{
-                    width: CELL, height: CELL,
-                    backgroundColor: bg,
-                    border: `0.5px solid ${border}`,
-                    borderRadius: 2,
-                    flexShrink: 0,
-                  }}
-                />
-              )
-            })}
-            <span className="text-text-muted text-xs">More</span>
-          </div> */}
-
         </div>
       </div>
 
-      {/* Portal straight to document.body — sidesteps any ancestor with
-          transform/filter/will-change (e.g. a framer-motion page wrapper)
-          that would otherwise silently break `position: fixed`. */}
       {tooltip.visible && createPortal(
         <div
-          style={{
-            position:      'fixed',
-            left:          tooltip.x,
-            top:           tooltip.y - 8,
-            transform:     'translate(-50%, -100%)',
-            zIndex:        9999,
-            pointerEvents: 'none',
-          }}
-          className="bg-bg-surface border border-border-subtle rounded px-2 py-1
-                     text-text-muted text-xs whitespace-nowrap"
+          style={{ position: 'fixed', left: tooltip.x, top: tooltip.y - 8, transform: 'translate(-50%, -100%)', zIndex: 9999, pointerEvents: 'none' }}
+          className="bg-bg-surface border border-border-subtle rounded px-2 py-1 text-text-muted text-xs whitespace-nowrap"
         >
           {tooltip.text}
         </div>,

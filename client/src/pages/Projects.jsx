@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import ProjectCard from '../components/ProjectCard.jsx'
+import ProjectCard from '../components/ui/ProjectCard.jsx'
 import { getProjects } from '../lib/api.js'
 
 const PAGE_SIZE = 6

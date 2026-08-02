@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import ExperienceItem from '../components/ExperienceItem.jsx'
+import ExperienceItem from '../components/ui/ExperienceItem.jsx'
 import { getExperience } from '../lib/api.js'
 
 export default function Experience() {

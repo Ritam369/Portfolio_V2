@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import LinkItem from '../components/LinkItem.jsx'
+import LinkItem from '../components/ui/LinkItem.jsx'
 import { getLinks } from '../lib/api.js'
 
 // Section labels match the reference screenshot — uppercase, accent color
