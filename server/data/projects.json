@@ -10,14 +10,24 @@
     "order": 1
   },
   {
+    "id": "imgbadlo",
+    "title": "ImgBadlo",
+    "description": "A production-ready Node.js CLI tool for automated image optimization and multi-format conversion, published to npm.",
+    "techStack": ["Node.js", "Sharp", "Chalk"],
+    "liveUrl": "https://www.npmjs.com/package/@ritam369/imgbadlo",
+    "repoUrl": "https://github.com/Ritam369/ImgBadlo",
+    "featured": true,
+    "order": 2
+  },
+  {
     "id": "real-time-location-tracker",
     "title": "Real-time Location Tracker",
     "description": "Built a multi-user location tracking application using Socket.IO, Kafka, OAuth 2.0, OpenID Connect, and Leaflet.",
     "techStack": ["WebSocket", "Kafka", "Leaflet", "OIDC"],
     "liveUrl": "",
     "repoUrl": "https://github.com/Ritam369/location-tracking-v2",
-    "featured": true,
-    "order": 2
+    "featured": false,
+    "order": 3
   },
   {
     "id": "real-time-polling-system",
@@ -27,7 +37,7 @@
     "liveUrl": "",
     "repoUrl": "https://github.com/Ritam369/real-time-polling-system",
     "featured": false,
-    "order": 3
+    "order": 4
   },
   {
     "id": "diskshobi",
@@ -37,7 +47,7 @@
     "liveUrl": "",
     "repoUrl": "https://github.com/Ritam369/DiskDhobi",
     "featured": true,
-    "order": 4
+    "order": 5
   },
   {
     "id": "winterest",
@@ -47,7 +57,7 @@
     "liveUrl": "https://winterest.vercel.app/",
     "repoUrl": "https://github.com/Ritam369/Winterest",
     "featured": true,
-    "order": 5
+    "order": 6
   },
   {
     "id": "impulse-2k26",
@@ -57,7 +67,7 @@
     "liveUrl": "https://bitcollege.in/impulse2k26/",
     "repoUrl": "https://github.com/Ritam369/impulse-2k26",
     "featured": false,
-    "order": 6
+    "order": 7
   },
   {
     "id": "blog-site",
@@ -67,6 +77,6 @@
     "liveUrl": "https://ritamsahablogs.dev/",
     "repoUrl": "https://github.com/Ritam369/blog-site",
     "featured": false,
-    "order": 7
+    "order": 8
   }
 ]

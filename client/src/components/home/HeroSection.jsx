@@ -41,7 +41,7 @@ export default function HeroSection({ sectionIdx }) {
             X
           </a>
           . Check out my work below or grab my{' '}
-          <a href="https://drive.google.com/file/d/1g48TUxRhY5JNVjtP-5Y718Ye1mmgzqnI/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="link-accent">
+          <a href="https://drive.google.com/file/d/1JHAT1ggUdHgz2J-1f7UDUIfvwvofsRyR/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="link-accent">
             resume
           </a>
           .
