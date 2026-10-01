@@ -2,12 +2,17 @@ import { useEffect, useState } from 'react'
 import NpmCard from '../ui/NpmCard.jsx'
 import { getNpmPackages } from '../../lib/api.js'
 
+const DEFAULT_VISIBLE = 2
+
 // NpmPackages — "npm packages" section for the Home page.
+// Shows DEFAULT_VISIBLE cards by default with a "Show N more" toggle,
+// and a "Show less" to collapse back. Count in header is always the total.
 // Props: { sectionIdx: number }
 
 export default function NpmPackages({ sectionIdx }) {
-  const [packages, setPackages] = useState([])
-  const [error, setError] = useState(null)
+  const [packages, setPackages]   = useState([])
+  const [expanded, setExpanded]   = useState(false)
+  const [error, setError]         = useState(null)
 
   useEffect(() => {
     getNpmPackages()
@@ -15,8 +20,12 @@ export default function NpmPackages({ sectionIdx }) {
       .catch(() => setError('Could not load packages.'))
   }, [])
 
+  const visible   = expanded ? packages : packages.slice(0, DEFAULT_VISIBLE)
+  const remaining = packages.length - DEFAULT_VISIBLE
+
   return (
     <section id={`section-${sectionIdx}`} data-section={sectionIdx} className="pb-16">
+      {/* Header */}
       <div className="flex items-center gap-2 mb-2">
         <span className="section-header">npm packages</span>
         {packages.length > 0 && (
@@ -33,12 +42,24 @@ export default function NpmPackages({ sectionIdx }) {
         <p className="text-text-muted text-sm">Loading…</p>
       )}
 
-      {packages.length > 0 && (
+      {visible.length > 0 && (
         <div className="grid gap-4 sm:grid-cols-2 items-stretch">
-          {packages.map((pkg) => (
+          {visible.map((pkg) => (
             <NpmCard key={pkg.id} {...pkg} />
           ))}
         </div>
+      )}
+
+      {/* Show more / Show less toggle */}
+      {packages.length > DEFAULT_VISIBLE && (
+        <button
+          onClick={() => setExpanded((e) => !e)}
+          className="block mt-6 mx-auto text-sm text-accent hover:text-accent-hover transition-colors duration-150"
+        >
+          {expanded
+            ? 'Show less ↑'
+            : `Show ${remaining} more →`}
+        </button>
       )}
     </section>
   )

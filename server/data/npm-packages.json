@@ -1,6 +1,14 @@
 [
   {
     "id": "01",
+    "name": "men-backend",
+    "description": "Scaffolds a backend-only MongoDB + Express + Node (MEN) API with a standardized, module-sliced structure — the same conventions used across my projects",
+    "installCmd": "npm i men-backend",
+    "npmUrl": "https://www.npmjs.com/package/men-backend",
+    "githubUrl": "https://github.com/Ritam369/men-backend"
+  },
+  {
+    "id": "02",
     "name": "@ritam369/imgbadlo",
     "description": "Local CLI to convert and compress images between JPEG, PNG, and WebP. No uploads, no network calls.",
     "installCmd": "npm i @ritam369/imgbadlo",
@@ -8,7 +16,7 @@
     "githubUrl": "https://github.com/Ritam369/ImgBadlo"
   },
   {
-    "id": "02",
+    "id": "03",
     "name": "@ritam369/chaiwinder",
     "description": "A lightweight utility-first CSS engine for the browser. Write chai-* class names in your HTML and chaiWinder converts them into inline styles automatically.",
     "installCmd": "npm i @ritam369/chaiwinder",
