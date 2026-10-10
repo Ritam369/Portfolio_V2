@@ -31,6 +31,12 @@
       "value": "Code & projects",
       "url": "https://github.com/Ritam369",
       "icon": "github"
+    },
+    {
+      "label": "LeetCode",
+      "value": "Problem solving",
+      "url": "https://leetcode.com/u/ritamsaha75579/",
+      "icon": "leetcode"
     }
   ],
   "content": [
