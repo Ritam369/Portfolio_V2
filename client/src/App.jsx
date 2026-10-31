@@ -2,7 +2,6 @@ import {
   BrowserRouter,
   Routes,
   Route,
-  Link,
   useLocation,
 } from "react-router-dom";
 import { useEffect } from "react";
@@ -41,12 +40,12 @@ function NotFound() {
         That route doesn't exist. You may have followed a broken link.
       </p>
 
-      <Link
-        to="/"
+      <a
+        href="https://ritamsaha.me"
         className="text-sm text-accent hover:text-accent-hover transition-colors duration-150"
       >
         ← Back to Home
-      </Link>
+      </a>
     </main>
   );
 }
@@ -74,10 +73,16 @@ export default function App() {
   // Check whether this hostname has a dedicated subdomain page.
   const subdomainPage = SUBDOMAIN_ROUTES[hostname];
 
+  // Determine whether the current hostname is a custom subdomain.
+  const isSubdomain = Object.keys(SUBDOMAIN_ROUTES).includes(hostname);
+
+  // Redirect Home navigation to the primary domain on subdomains.
+  const homeUrl = isSubdomain ? "https://ritamsaha.me" : "/";
+
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <Navbar />
+      <Navbar homeUrl={homeUrl} />
 
       <div className="min-h-screen pt-16 sm:pt-20">
         <Routes>
