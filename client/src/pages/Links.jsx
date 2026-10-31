@@ -1,21 +1,20 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import LinkItem from '../components/ui/LinkItem.jsx'
-import { getLinks } from '../lib/api.js'
+import { useEffect, useState } from "react";
+import LinkItem from "../components/ui/LinkItem.jsx";
+import { getLinks } from "../lib/api.js";
 
 // Section labels match the reference screenshot — uppercase, accent color
-const SECTION_ORDER = ['connect', 'professional', 'content']
+const SECTION_ORDER = ["connect", "professional", "content"];
 
 export default function Links() {
-  const [links, setLinks] = useState(null)
-  const [error, setError] = useState(null)
+  const [links, setLinks] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    document.title = 'Links — Ritam Saha'
+    document.title = "Links — Ritam Saha";
     getLinks()
       .then(setLinks)
-      .catch(() => setError('Failed to load links.'))
-  }, [])
+      .catch(() => setError("Failed to load links."));
+  }, []);
 
   return (
     <main className="page-wrapper fade-in">
@@ -28,14 +27,18 @@ export default function Links() {
             className="w-full h-full object-cover brightness-50 hover:brightness-100 transition-[filter] text-3xl font-bold select-none duration-500 ease-in-out"
           />
         </div>
-        <h1 className="text-2xl font-bold text-text-primary mb-1">Ritam Saha</h1>
+        <h1 className="text-2xl font-bold text-text-primary mb-1">
+          Ritam Saha
+        </h1>
         <p className="text-text-muted text-sm max-w-xs">
           Building for the web, learning every layer, shipping what matters.
         </p>
       </div>
 
       {error && <p className="text-text-muted text-sm text-center">{error}</p>}
-      {!links && !error && <p className="text-text-muted text-sm text-center">Loading…</p>}
+      {!links && !error && (
+        <p className="text-text-muted text-sm text-center">Loading…</p>
+      )}
 
       {links && (
         <div className="max-w-lg mx-auto space-y-8">
@@ -56,14 +59,16 @@ export default function Links() {
 
       {/* Footer */}
       <div className="mt-16 text-center space-y-2">
-        <p className="text-text-muted text-xs">Made with intentional simplicity</p>
-        <Link
-          to="/"
+        <p className="text-text-muted text-xs">
+          Made with intentional simplicity
+        </p>
+        <a
+          href="https://ritamsaha.me"
           className="text-accent hover:text-accent-hover transition-colors duration-150 text-sm"
         >
           ← View Full Portfolio
-        </Link>
+        </a>
       </div>
     </main>
-  )
+  );
 }
