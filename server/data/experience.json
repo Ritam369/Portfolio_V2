@@ -4,9 +4,9 @@
     "company": "Omnivera Technologies Pvt Ltd",
     "role": "Full-Stack Web Developer Intern",
     "startDate": "2026-07",
-    "endDate": null,
-    "current": true,
-    "description": "Working across the full stack building and maintaining web applications, collaborating with the engineering team on feature delivery and code quality.",
-    "tech": ["JavaScript", "React", "Database", "REST API"]
+    "endDate": "2026-10",
+    "current": false,
+    "description": "Worked across the full stack shipping production features with React and Node.js — built a Hospital Management System, a WebSocket & Redis Pub/Sub based live notification system, a WebRTC video conferencing application, and a bulk WhatsApp campaigning system powered by WebSockets and BullMQ.",
+    "tech": ["JavaScript", "TypeScript", "TailwindCSS", "React", "Database", "Redis", "REST API", "WebSocket", "WebRTC", "MERN"]
   }
 ]

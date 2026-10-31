@@ -27,9 +27,10 @@ export default function HeroSection({ sectionIdx }) {
           Hi, I'm Ritam Saha. I'm a CS student and full-stack web developer.
         </p>
         <p className="text-text-primary">
-          Currently interning at{' '}
+          I recently completed a Full-Stack Web Developer Internship at{' '}
           <span className="text-accent font-medium">Omnivera Technologies Pvt Ltd</span>
-          , where I work across the full stack — building and shipping features with React and Node.js.
+          , where I built and shipped features. Now I'm focused on my learning,
+          growth, and development journey — going deeper into the stack and building things that matter.
         </p>
         <p className="text-text-muted">
           I write about what I learn and build on my{' '}
