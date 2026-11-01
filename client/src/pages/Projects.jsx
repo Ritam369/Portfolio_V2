@@ -1,20 +1,16 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ProjectCard from '../components/ui/ProjectCard.jsx'
-import { getProjects } from '../lib/api.js'
+import { getProjects } from '../lib/content.js'
 
 const PAGE_SIZE = 6
 
 export default function Projects() {
-  const [projects, setProjects] = useState([])
+  const projects = getProjects(true)
   const [visible, setVisible] = useState(PAGE_SIZE)
-  const [error, setError] = useState(null)
 
   useEffect(() => {
     document.title = 'Projects — Ritam Saha'
-    getProjects(true)
-      .then(setProjects)
-      .catch(() => setError('Failed to load projects.'))
   }, [])
 
   const shown = projects.slice(0, visible)
@@ -37,12 +33,6 @@ export default function Projects() {
       <p className="text-text-muted text-sm mb-10">
         Things I've built — side projects, college projects, and experiments.
       </p>
-
-      {error && <p className="text-text-muted text-sm">{error}</p>}
-
-      {!error && projects.length === 0 && (
-        <p className="text-text-muted text-sm">Loading…</p>
-      )}
 
       {shown.length > 0 && (
         <div className="grid gap-4 sm:grid-cols-2 items-stretch">

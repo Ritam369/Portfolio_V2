@@ -1,22 +1,14 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ProjectCard from '../ui/ProjectCard.jsx'
-import { getProjects } from '../../lib/api.js'
+import { getProjects } from '../../lib/content.js'
 
 // FeaturedProjects — "Things I've built" section for the Home page.
 // Shows only featured:true projects + "Show N more" link if non-featured exist.
 // Props: { sectionIdx: number }
 
 export default function FeaturedProjects({ sectionIdx }) {
-  const [featured, setFeatured]   = useState([])
-  const [totalCount, setTotal]    = useState(0)
-
-  useEffect(() => {
-    getProjects(false).then(setFeatured).catch(() => {})
-    getProjects(true).then((all) => setTotal(all.length)).catch(() => {})
-  }, [])
-
-  const showMoreCount = totalCount - featured.length
+  const featured = getProjects(false)
+  const showMoreCount = getProjects(true).length - featured.length
 
   return (
     <section id={`section-${sectionIdx}`} data-section={sectionIdx} className="pb-14">
@@ -27,15 +19,11 @@ export default function FeaturedProjects({ sectionIdx }) {
         </Link>
       </div>
 
-      {featured.length === 0 ? (
-        <p className="text-text-muted text-sm">Loading projects…</p>
-      ) : (
-        <div className="grid gap-3 sm:grid-cols-2 items-stretch">
-          {featured.map((p) => (
-            <ProjectCard key={p.id} {...p} />
-          ))}
-        </div>
-      )}
+      <div className="grid gap-3 sm:grid-cols-2 items-stretch">
+        {featured.map((p) => (
+          <ProjectCard key={p.id} {...p} />
+        ))}
+      </div>
 
       {showMoreCount > 0 && (
         <Link

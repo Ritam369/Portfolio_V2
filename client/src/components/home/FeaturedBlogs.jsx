@@ -1,22 +1,14 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import BlogCard from '../ui/BlogCard.jsx'
-import { getBlogs } from '../../lib/api.js'
+import { getBlogs } from '../../lib/content.js'
 
 // FeaturedBlogs — "Things I've written" section for the Home page.
 // Shows only featured:true blogs + "Show N more" link if non-featured exist.
 // Props: { sectionIdx: number }
 
 export default function FeaturedBlogs({ sectionIdx }) {
-  const [featured, setFeatured] = useState([])
-  const [totalCount, setTotal]  = useState(0)
-
-  useEffect(() => {
-    getBlogs(false).then(setFeatured).catch(() => {})
-    getBlogs(true).then((all) => setTotal(all.length)).catch(() => {})
-  }, [])
-
-  const showMoreCount = totalCount - featured.length
+  const featured = getBlogs(false)
+  const showMoreCount = getBlogs(true).length - featured.length
 
   return (
     <section id={`section-${sectionIdx}`} data-section={sectionIdx}>
@@ -27,15 +19,11 @@ export default function FeaturedBlogs({ sectionIdx }) {
         </Link>
       </div>
 
-      {featured.length === 0 ? (
-        <p className="text-text-muted text-sm">Loading posts…</p>
-      ) : (
-        <div>
-          {featured.map((b) => (
-            <BlogCard key={b.id} {...b} />
-          ))}
-        </div>
-      )}
+      <div>
+        {featured.map((b) => (
+          <BlogCard key={b.id} {...b} />
+        ))}
+      </div>
 
       {showMoreCount > 0 && (
         <Link

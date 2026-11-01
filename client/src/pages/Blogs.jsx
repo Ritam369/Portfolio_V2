@@ -1,25 +1,27 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import BlogCard from '../components/ui/BlogCard.jsx'
-import { getBlogs, getDevToCount } from '../lib/api.js'
+import { getBlogs } from '../lib/content.js'
+import { getDevToCount } from '../lib/api.js'
 
 export default function Blogs() {
-  // All blogs (featured + non-featured) for this page
-  const [blogs, setBlogs] = useState([])
-  // Total count from dev.to — null while loading, number once resolved
+  // All blogs (featured + non-featured) — bundled, available on first render
+  const blogs = getBlogs(true)
+  // Total count from dev.to — null until resolved, then live number wins over local count
   const [devToCount, setDevToCount] = useState(null)
-  const [error, setError] = useState(null)
 
   useEffect(() => {
     document.title = 'Blogs — Ritam Saha'
 
-    // Fetch all portfolio blogs (featured + non-featured)
-    getBlogs(true)
-      .then(setBlogs)
-      .catch(() => setError('Failed to load posts.'))
-
-    // Fetch real total count from dev.to independently — failure is silent
-    getDevToCount('ritam369').then(setDevToCount).catch(() => {})
+    // Fetch real total count from dev.to independently — failure is silent,
+    // the local bundled count stays displayed
+    const controller = new AbortController()
+    getDevToCount('ritam369', controller.signal)
+      .then((count) => {
+        if (count !== null) setDevToCount(count)
+      })
+      .catch(() => {})
+    return () => controller.abort()
   }, [])
 
   return (
@@ -41,22 +43,14 @@ export default function Blogs() {
       </p>
 
       {/* Article count — uses dev.to total when available, falls back to portfolio count */}
-      {!error && (blogs.length > 0 || devToCount !== null) && (
-        <p className="text-text-muted text-xs mb-8 flex items-center gap-1.5">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
-            <path d="M14 2v4a2 2 0 0 0 2 2h4" />
-          </svg>
-          {devToCount !== null ? devToCount : blogs.length}{' '}
-          article{(devToCount ?? blogs.length) !== 1 ? 's' : ''} published
-        </p>
-      )}
-
-      {!blogs.length && !error && (
-        <p className="text-text-muted text-sm mt-8">Loading…</p>
-      )}
-
-      {error && <p className="text-text-muted text-sm mt-8">{error}</p>}
+      <p className="text-text-muted text-xs mb-8 flex items-center gap-1.5">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
+          <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+        </svg>
+        {devToCount !== null ? devToCount : blogs.length}{' '}
+        article{(devToCount ?? blogs.length) !== 1 ? 's' : ''} published
+      </p>
 
       {blogs.length > 0 && (
         <div className="mt-6">

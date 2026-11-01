@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import NpmCard from '../ui/NpmCard.jsx'
-import { getNpmPackages } from '../../lib/api.js'
+import { getNpmPackages } from '../../lib/content.js'
 
 const DEFAULT_VISIBLE = 2
 
@@ -10,15 +10,8 @@ const DEFAULT_VISIBLE = 2
 // Props: { sectionIdx: number }
 
 export default function NpmPackages({ sectionIdx }) {
-  const [packages, setPackages]   = useState([])
-  const [expanded, setExpanded]   = useState(false)
-  const [error, setError]         = useState(null)
-
-  useEffect(() => {
-    getNpmPackages()
-      .then(setPackages)
-      .catch(() => setError('Could not load packages.'))
-  }, [])
+  const packages = getNpmPackages()
+  const [expanded, setExpanded] = useState(false)
 
   const visible   = expanded ? packages : packages.slice(0, DEFAULT_VISIBLE)
   const remaining = packages.length - DEFAULT_VISIBLE
@@ -35,12 +28,6 @@ export default function NpmPackages({ sectionIdx }) {
       <p className="text-text-muted text-sm mb-6">
         Open-source packages I've published to the npm registry.
       </p>
-
-      {error && <p className="text-text-muted text-sm">{error}</p>}
-
-      {!error && packages.length === 0 && (
-        <p className="text-text-muted text-sm">Loading…</p>
-      )}
 
       {visible.length > 0 && (
         <div className="grid gap-4 sm:grid-cols-2 items-stretch">

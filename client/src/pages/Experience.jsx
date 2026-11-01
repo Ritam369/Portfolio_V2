@@ -1,17 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import ExperienceItem from '../components/ui/ExperienceItem.jsx'
-import { getExperience } from '../lib/api.js'
+import { getExperience } from '../lib/content.js'
 
 export default function Experience() {
-  const [experience, setExperience] = useState([])
-  const [error, setError] = useState(null)
+  const experience = getExperience()
 
   useEffect(() => {
     document.title = 'Chapters of Ritam\'s Journey'
-    getExperience()
-      .then(setExperience)
-      .catch(() => setError('Failed to load experience.'))
   }, [])
 
   return (
@@ -31,12 +27,6 @@ export default function Experience() {
       <p className="text-text-muted text-sm mb-10">
         Places I've worked, what I built there, and what I learned.
       </p>
-
-      {error && <p className="text-text-muted text-sm">{error}</p>}
-
-      {!error && experience.length === 0 && (
-        <p className="text-text-muted text-sm">Loading…</p>
-      )}
 
       {experience.length > 0 && (
         <div className="space-y-8">

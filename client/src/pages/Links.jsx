@@ -1,19 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import LinkItem from "../components/ui/LinkItem.jsx";
-import { getLinks } from "../lib/api.js";
+import { getLinks } from "../lib/content.js";
 
 // Section labels match the reference screenshot — uppercase, accent color
 const SECTION_ORDER = ["connect", "professional", "content"];
 
 export default function Links() {
-  const [links, setLinks] = useState(null);
-  const [error, setError] = useState(null);
+  const links = getLinks();
 
   useEffect(() => {
     document.title = "Links — Ritam Saha";
-    getLinks()
-      .then(setLinks)
-      .catch(() => setError("Failed to load links."));
   }, []);
 
   return (
@@ -35,27 +31,20 @@ export default function Links() {
         </p>
       </div>
 
-      {error && <p className="text-text-muted text-sm text-center">{error}</p>}
-      {!links && !error && (
-        <p className="text-text-muted text-sm text-center">Loading…</p>
-      )}
-
-      {links && (
-        <div className="max-w-lg mx-auto space-y-8">
-          {SECTION_ORDER.filter((key) => links[key]?.length > 0).map((key) => (
-            <section key={key}>
-              <h2 className="text-accent text-xs font-semibold tracking-widest uppercase mb-3">
-                {key}
-              </h2>
-              <div className="border border-border-subtle rounded-md bg-bg-surface overflow-hidden">
-                {links[key].map((item) => (
-                  <LinkItem key={item.label} {...item} />
-                ))}
-              </div>
-            </section>
-          ))}
-        </div>
-      )}
+      <div className="max-w-lg mx-auto space-y-8">
+        {SECTION_ORDER.filter((key) => links[key]?.length > 0).map((key) => (
+          <section key={key}>
+            <h2 className="text-accent text-xs font-semibold tracking-widest uppercase mb-3">
+              {key}
+            </h2>
+            <div className="border border-border-subtle rounded-md bg-bg-surface overflow-hidden">
+              {links[key].map((item) => (
+                <LinkItem key={item.label} {...item} />
+              ))}
+            </div>
+          </section>
+        ))}
+      </div>
 
       {/* Footer */}
       <div className="mt-16 text-center space-y-2">

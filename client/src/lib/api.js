@@ -1,56 +1,25 @@
-// API fetch wrappers for all /api/* endpoints.
+// API fetch wrappers for the remaining live endpoints.
+// Static portfolio content now lives in lib/content.js (bundled).
 // In dev, Vite proxies /api to localhost:5000.
 // In production, Vercel routes /api to the serverless function.
 
 const BASE = '/api'
 
-async function fetchJSON(path) {
-  const res = await fetch(`${BASE}${path}`)
+export async function getContributions() {
+  const res = await fetch(`${BASE}/github-contributions`)
   if (!res.ok) {
-    throw new Error(`API error ${res.status} for ${path}`)
+    throw new Error(`API error ${res.status} for /github-contributions`)
   }
   return res.json()
 }
 
-export function getExperience() {
-  return fetchJSON('/experience')
-}
-
-/**
- * @param {boolean} all - if true, fetches all projects (featured + non-featured).
- *                        if false/omitted, fetches only featured projects.
- */
-export function getProjects(all = false) {
-  return fetchJSON(all ? '/projects?all=true' : '/projects')
-}
-
-/**
- * @param {boolean} all - if true, fetches all blogs (featured + non-featured).
- *                        if false/omitted, fetches only featured blogs.
- */
-export function getBlogs(all = false) {
-  return fetchJSON(all ? '/blogs?all=true' : '/blogs')
-}
-
-export function getLinks() {
-  return fetchJSON('/links')
-}
-
-export function getContributions() {
-  return fetchJSON('/github-contributions')
-}
-
-export function getNpmPackages() {
-  return fetchJSON('/npm-packages')
-}
-
 /**
  * Fetches total published article count from dev.to public API.
- * Uses page-size trick: request page=1 with per_page=1 and read the
- * x-total header, falling back to counting pages if needed.
- * Returns a number, or null if the request fails.
+ * Returns a number, or null if the request fails or is aborted.
+ * @param {AbortSignal} [signal] - optional signal to cancel the request
+ *                                 (e.g. on unmount).
  */
-export async function getDevToCount(username = 'ritam369') {
+export async function getDevToCount(username = 'ritam369', signal) {
   try {
     // dev.to doesn't expose a dedicated count endpoint, but fetching
     // page=1&per_page=1000 gives us up to 1000 articles; for most users
@@ -58,7 +27,7 @@ export async function getDevToCount(username = 'ritam369') {
     // If you ever exceed 1000 posts, paginate here.
     const res = await fetch(
       `https://dev.to/api/articles?username=${username}&per_page=1000`,
-      { headers: { Accept: 'application/json' } }
+      { headers: { Accept: 'application/json' }, signal }
     )
     if (!res.ok) return null
     const articles = await res.json()
