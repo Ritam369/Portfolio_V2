@@ -18,6 +18,7 @@ import Links from "./pages/Links.jsx";
 // Map custom subdomains to their corresponding pages.
 const SUBDOMAIN_ROUTES = {
   "links.ritamsaha.me": <Links />,
+  "go.ritamsaha.me": <Links />,
   "blogs.ritamsaha.me": <Blogs />,
 };
 
